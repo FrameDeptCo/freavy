@@ -1,0 +1,16 @@
+packages:
+  - client
+  - server
+  - mcp
+
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+dangerouslyAllowAllBuilds: false
+savePrefix: ""
+# both postinstalls only place the platform-native binary; reviewed, required for vite/swc
+allowBuilds:
+  '@swc/core': true
+  esbuild: true

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+data/assets/
+data/projects/
+data/thumbnails/
+.env
+!.env.example
+.superpowers/

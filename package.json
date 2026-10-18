@@ -1,0 +1,12 @@
+{
+  "name": "freavy",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "dev:client": "pnpm --filter client dev",
+    "dev:server": "pnpm --filter server dev",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
