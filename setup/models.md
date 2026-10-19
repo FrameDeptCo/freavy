@@ -23,8 +23,8 @@ Optional: set `COMFY_DIR` (see the README) if you want freavy to start ComfyUI f
 
 | Status | Models |
 |---|---|
-| Tested by the author | Qwen Image 2512, Qwen Image Edit 2511, 4x-UltraSharp upscale, Wan 2.1 VACE, LTX 2.3 distilled, MiniMax H3 (text, image and multi-reference), LTX 2.5 Alpha Gen |
-| Wired but not re-tested | Ideogram 4, TripoSG, LTX 2.3 dev INT8-ConvRot, LTX 2.5 distilled INT8-ConvRot |
+| Tested by the author | Qwen Image 2512, Wan 2.1 VACE, LTX 2.3 distilled, MiniMax H3 (text, image and multi-reference), LTX 2.5 Alpha Gen |
+| Wired but not re-tested | Qwen Image Edit 2511, 4x-UltraSharp upscale, Ideogram 4, TripoSG, LTX 2.3 dev INT8-ConvRot, LTX 2.5 distilled INT8-ConvRot |
 | Not working | LTX 2.3 Foley V2A (shelved: runs into a VRAM eviction problem with the Gemma encoder) |
 | Not implemented locally | Inpaint and Remove Background (no workflow template yet; use their fal.ai option), Mask by Text (no working option yet) |
 

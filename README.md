@@ -12,6 +12,24 @@ Built by [Frame Department](https://framedepartment.co). MIT licensed.
 [![freavy demo: 11 shots animated locally with MiniMax H3](docs/demo.gif)](docs/freavy-demo.mp4)
 *Click for the full 54s demo: 11 stills animated locally with MiniMax H3, driven from Claude through the freavy MCP.*
 
+## Fastest path
+
+1. Install [Node.js](https://nodejs.org), [pnpm](https://pnpm.io) 12, [ComfyUI](https://github.com/comfyanonymous/ComfyUI) (Windows portable) and [Ollama](https://ollama.com).
+2. `git clone https://github.com/FrameDeptCo/freavy.git`, then `pnpm install --frozen-lockfile` inside it.
+3. Download the four **Qwen Image 2512** files listed in [setup/models.md](setup/models.md) into your ComfyUI `models` folders.
+4. Start ComfyUI, then `pnpm --filter server dev` and `pnpm --filter client dev`.
+5. Run `node scripts/smoke-test.mjs --generate`. It checks everything and renders one free local image.
+6. Open http://localhost:5917, open `examples/hello-image.freavy.json` from the folder icon, and press Run Model.
+
+Don't want to do it by hand? Give [AGENTS.md](AGENTS.md) to Claude Code or any coding agent and tell it "read AGENTS.md and get freavy running". It walks the agent through checks, install, models, verification and troubleshooting.
+
+## Example canvases
+
+In `examples/`, openable from the folder icon in the app:
+
+- `hello-image.freavy.json`: a prompt into Qwen Image. The smallest working canvas.
+- `image-to-video.freavy.json`: Qwen Image makes a still, MiniMax H3 animates it with a timeline prompt.
+
 ## What you need
 
 freavy is the canvas and orchestrator. The generation itself happens in engines you run yourself, and the models are separate downloads (several GB to tens of GB each). Nothing works until those are in place.

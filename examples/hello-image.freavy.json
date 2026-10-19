@@ -1,0 +1,45 @@
+{
+  "id": "example-hello-image",
+  "name": "Hello image (Qwen Image only)",
+  "nodes": [
+    {
+      "id": "p0",
+      "defId": "prompt",
+      "x": 0,
+      "y": 0,
+      "params": {
+        "text": "A burgundy structured leather handbag with twin gold turn-lock hardware on a cream studio backdrop, soft window light from the left, 85mm product photograph, shallow depth of field"
+      },
+      "results": [],
+      "activeResult": 0,
+      "w": 340,
+      "h": 240
+    },
+    {
+      "id": "g0",
+      "defId": "image-generate",
+      "x": 420,
+      "y": 0,
+      "params": {
+        "aspect": "1:1",
+        "batch": 1,
+        "seed": -1,
+        "steps": 8,
+        "cfg": 1
+      },
+      "results": [],
+      "activeResult": 0,
+      "modelId": "qwen-image"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "p0",
+      "sourceHandle": "text",
+      "target": "g0",
+      "targetHandle": "prompt"
+    }
+  ],
+  "updatedAt": "2026-10-18T00:00:00.000Z"
+}

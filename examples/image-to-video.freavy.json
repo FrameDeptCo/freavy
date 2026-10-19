@@ -1,0 +1,87 @@
+{
+  "id": "example-image-to-video",
+  "name": "Image to video (Qwen Image, then MiniMax H3)",
+  "nodes": [
+    {
+      "id": "p0",
+      "defId": "prompt",
+      "x": 0,
+      "y": 0,
+      "params": {
+        "text": "A burgundy structured leather handbag with twin gold turn-lock hardware on a cream studio backdrop, soft window light from the left, 85mm product photograph, shallow depth of field"
+      },
+      "results": [],
+      "activeResult": 0,
+      "w": 340,
+      "h": 240
+    },
+    {
+      "id": "g0",
+      "defId": "image-generate",
+      "x": 420,
+      "y": 0,
+      "params": {
+        "aspect": "1:1",
+        "batch": 1,
+        "seed": -1,
+        "steps": 8,
+        "cfg": 1
+      },
+      "results": [],
+      "activeResult": 0,
+      "modelId": "qwen-image"
+    },
+    {
+      "id": "p1",
+      "defId": "prompt",
+      "x": 420,
+      "y": 620,
+      "params": {
+        "text": "[0s-2s] Her hand adjusts its grip slightly on the handle, the bag settling with a small natural sway.\n[2s-5s] Camera drifts slowly around the bag on a shallow arc, keeping the hardware in frame throughout.\n\nCamera: slow arcing drift, no handheld shake, no cuts.\n\nAudio: quiet room tone, soft leather creak on the grip shift.\n\nNo text, no subtitles, no watermark."
+      },
+      "results": [],
+      "activeResult": 0,
+      "w": 340,
+      "h": 300
+    },
+    {
+      "id": "g1",
+      "defId": "video-generate",
+      "x": 860,
+      "y": 120,
+      "params": {
+        "duration": "5s",
+        "resolution": "720p",
+        "aspect": "auto",
+        "seed": -1
+      },
+      "results": [],
+      "activeResult": 0,
+      "modelId": "minimax-h3"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "p0",
+      "sourceHandle": "text",
+      "target": "g0",
+      "targetHandle": "prompt"
+    },
+    {
+      "id": "e1",
+      "source": "g0",
+      "sourceHandle": "image",
+      "target": "g1",
+      "targetHandle": "image"
+    },
+    {
+      "id": "e2",
+      "source": "p1",
+      "sourceHandle": "text",
+      "target": "g1",
+      "targetHandle": "prompt"
+    }
+  ],
+  "updatedAt": "2026-10-18T00:00:00.000Z"
+}
