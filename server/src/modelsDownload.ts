@@ -14,13 +14,14 @@ type ManifestEntry = { modelId: string; label: string; files: { folder: string; 
 
 function modelsRoot(): string {
   // ComfyUI portable: <COMFY_DIR>\ComfyUI\models
-  const comfy = process.env.COMFY_DIR ?? 'E:\\APPZ\\ComfyUI';
+  const comfy = process.env.COMFY_DIR;
+  if (!comfy) throw new Error('In-app downloads need COMFY_DIR (portable ComfyUI root) set. Otherwise download the files by hand: see setup/models.md');
   return join(comfy, 'ComfyUI', 'models');
 }
 
 async function fetchManifest(): Promise<ManifestEntry[]> {
   const r = await fetch(MANIFEST_URL);
-  if (!r.ok) throw new Error(`manifest unavailable (${r.status})`);
+  if (!r.ok) throw new Error(`model manifest unavailable (${r.status}). Download the files by hand: see setup/models.md`);
   return (await r.json()) as ManifestEntry[];
 }
 

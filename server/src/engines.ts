@@ -6,11 +6,11 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { COMFY_URL, OLLAMA_URL } from './status.ts';
 
-const COMFY_DIR = process.env.COMFY_DIR ?? 'E:\\APPZ\\ComfyUI';
-const COMFY_PYTHON = process.env.COMFY_PYTHON ?? join(COMFY_DIR, 'python_embeded', 'python.exe');
-const COMFY_MAIN = process.env.COMFY_MAIN ?? join(COMFY_DIR, 'ComfyUI', 'main.py');
+const COMFY_DIR = process.env.COMFY_DIR; // optional: portable ComfyUI root; unset = never autostart ComfyUI
+const COMFY_PYTHON = process.env.COMFY_PYTHON ?? (COMFY_DIR ? join(COMFY_DIR, 'python_embeded', 'python.exe') : '');
+const COMFY_MAIN = process.env.COMFY_MAIN ?? (COMFY_DIR ? join(COMFY_DIR, 'ComfyUI', 'main.py') : '');
 const OLLAMA_EXE = process.env.OLLAMA_EXE ?? join(process.env.LOCALAPPDATA ?? '', 'Programs', 'Ollama', 'ollama.exe');
-const OLLAMA_MODELS = process.env.OLLAMA_MODELS ?? 'E:\\MODELS\\Ollama';
+const OLLAMA_MODELS = process.env.OLLAMA_MODELS; // optional: custom Ollama model folder
 
 async function reachable(url: string): Promise<boolean> {
   try {
@@ -48,12 +48,13 @@ export async function ensureEngines(): Promise<void> {
 
   if (ollama) { console.log('[engines] Ollama already up'); }
   else if (!recentlyLaunched('frv-ollama.lock')) {
-    if (launch(OLLAMA_EXE, ['serve'], { env: { ...process.env, OLLAMA_MODELS } })) console.log('[engines] starting Ollama…');
+    if (launch(OLLAMA_EXE, ['serve'], { env: OLLAMA_MODELS ? { ...process.env, OLLAMA_MODELS } : process.env })) console.log('[engines] starting Ollama…');
   }
 
   if (comfy) { console.log('[engines] ComfyUI already up'); }
   else if (!recentlyLaunched('frv-comfy.lock')) {
-    if (launch(COMFY_PYTHON, ['-s', COMFY_MAIN, '--windows-standalone-build'], { cwd: COMFY_DIR }))
+    if (!COMFY_PYTHON || !COMFY_MAIN) console.log(`[engines] ComfyUI not reachable at ${COMFY_URL}. Start it yourself, or set COMFY_DIR so freavy can.`);
+    else if (launch(COMFY_PYTHON, ['-s', COMFY_MAIN, '--windows-standalone-build'], { cwd: COMFY_DIR }))
       console.log('[engines] starting ComfyUI… (model load ~20–40s; engine dots go green when ready)');
   }
 }

@@ -56,7 +56,7 @@ app.post('/api/generate', async (req, res) => {
 
 app.get('/api/fs/list', (req, res) => {
   try {
-    res.json(listDir(String(req.query.path ?? process.env.USERPROFILE ?? homedir())));
+    res.json(listDir(String(req.query.path || process.env.USERPROFILE || homedir())));
   } catch (err) {
     res.status(400).json({ error: err instanceof Error ? err.message : String(err) });
   }

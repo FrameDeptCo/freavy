@@ -12,13 +12,17 @@ Built by [Frame Department](https://framedepartment.co). MIT licensed.
 [![freavy demo: 11 shots animated locally with MiniMax H3](docs/demo.gif)](docs/freavy-demo.mp4)
 *Click for the full 54s demo: 11 stills animated locally with MiniMax H3, driven from Claude through the freavy MCP.*
 
-## Requirements
+## What you need
 
-- Node.js and [pnpm](https://pnpm.io) 12
-- [ComfyUI](https://github.com/comfyanonymous/ComfyUI) (recent version) running on `127.0.0.1:8188`
-- [Ollama](https://ollama.com) on `127.0.0.1:11434` (for LLM/vision nodes)
-- An NVIDIA GPU (24 GB VRAM recommended for the video models)
-- Model files: see [setup/models.md](setup/models.md)
+freavy is the canvas and orchestrator. The generation itself happens in engines you run yourself, and the models are separate downloads (several GB to tens of GB each). Nothing works until those are in place.
+
+- **Windows 11.** Developed and tested only there. The code is plain Node and should port, but Linux and macOS are untested.
+- **Node.js** (tested on 24) and **[pnpm](https://pnpm.io) 12** (the repo pins 12.3.4).
+- **[ComfyUI](https://github.com/comfyanonymous/ComfyUI)**, recent version (0.31+ recommended), running at `127.0.0.1:8188`. This is what runs the local image and video models.
+- **[Ollama](https://ollama.com)** at `127.0.0.1:11434`, only for the prompt, describe and LLM nodes.
+- **An NVIDIA GPU.** Tested on a 24 GB RTX 4090. The video models need roughly that much; see the hardware notes in [setup/models.md](setup/models.md).
+- **Model files** in ComfyUI's `models` folders. The exact files per model, download links and a status table (what is tested, what is not) are in [setup/models.md](setup/models.md). Start with Qwen Image 2512 to confirm everything is wired up.
+- **fal.ai key** (optional, paid) for the API model options. Local models never need it.
 
 ## Setup
 
@@ -29,16 +33,46 @@ pnpm install --frozen-lockfile
 copy server\.env.example server\.env
 ```
 
-`server/.env` is optional: add `FAL_KEY` to enable the fal.ai API models, `MINIMAX_API_KEY` for direct MiniMax.
-
-Start ComfyUI and Ollama, then run the app:
+Start ComfyUI and Ollama yourself (or see `COMFY_DIR` below), then in two terminals:
 
 ```
 pnpm --filter server dev
 pnpm --filter client dev
 ```
 
-Or run `start-freavy.bat`. Open http://localhost:5917 (client); the orchestrator server listens on :5918.
+Or run `start-freavy.bat`. Open http://localhost:5917. The orchestrator server listens on :5918.
+
+The three dots in the top right (ComfyUI, Ollama, fal.ai) show what the server can reach. A local model is usable once ComfyUI is green and its files are installed.
+
+## Configuration
+
+Set these as environment variables before starting the server, or put keys in `server/.env`.
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `FAL_KEY` | fal.ai API models (optional) | unset |
+| `MINIMAX_API_KEY` | direct MiniMax API models (optional) | unset |
+| `COMFY_URL` | where ComfyUI is running | `http://127.0.0.1:8188` |
+| `OLLAMA_URL` | where Ollama is running | `http://127.0.0.1:11434` |
+| `COMFY_DIR` | Windows portable ComfyUI root; if set, the server starts ComfyUI for you when it is not already running | unset (never autostarts ComfyUI) |
+| `OLLAMA_MODELS` | custom Ollama model folder, used when freavy starts Ollama | Ollama's default |
+
+## Use it from Claude (MCP)
+
+With the server running, register the MCP server once (use the full path to your clone):
+
+```
+claude mcp add freavy -- node C:/path/to/freavy/mcp/server.mjs
+```
+
+Set `FREAVY_URL` if the server is not on `http://127.0.0.1:5918`. Claude can then check engine status, list models, generate images and video, and build or run whole canvases.
+
+## Troubleshooting
+
+- **ComfyUI dot is red.** ComfyUI is not reachable at `COMFY_URL`. Start it first.
+- **A model is greyed out.** Its files are missing or named differently. Compare against [setup/models.md](setup/models.md); names must match exactly.
+- **A video run never finishes or crawls.** Likely out of VRAM. Lower the resolution or duration.
+- **In-app model download fails.** That feature needs `COMFY_DIR` and a hosted manifest that is not part of this repo. Download the files by hand instead.
 
 ## Layout
 
