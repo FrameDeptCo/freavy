@@ -9,6 +9,9 @@ A free, local-first node canvas for AI image and video generation, built on top 
 
 Built by [Frame Department](https://framedepartment.co). MIT licensed.
 
+[![freavy demo: 11 shots animated locally with MiniMax H3](docs/demo-poster.jpg)](docs/freavy-demo.mp4)
+*Click to watch the 54s demo: 11 stills animated locally with MiniMax H3, driven from Claude through the freavy MCP.*
+
 ## Requirements
 
 - Node.js and [pnpm](https://pnpm.io) 12
