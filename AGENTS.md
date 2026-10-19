@@ -72,7 +72,7 @@ The smallest useful model is **Qwen Image 2512** (text to image). Its files are 
 
 1. Tell the user the four files, their folders and rough sizes, and get a yes.
 2. Download each file into its folder, keeping the exact file name.
-3. Run `node scripts/smoke-test.mjs` again. Qwen Image 2512 should now say `ready`. No restart is needed.
+3. Run `node scripts/smoke-test.mjs` again. Qwen Image 2512 should now say `ready`. No restart is normally needed; if it still says missing, restart ComfyUI and check again.
 4. Prove the whole chain with one free local render: `node scripts/smoke-test.mjs --generate`. It should print an image URL.
 
 Open `examples/hello-image.freavy.json` in the app (File dialog, folder icon top left) and press Run Model on the image node to see the same thing on the canvas.
